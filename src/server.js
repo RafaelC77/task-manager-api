@@ -1,8 +1,9 @@
 import http from "node:http";
 import { randomUUID } from "node:crypto";
 import { json } from "./middlewares/json.js";
+import { Database } from "./middlewares/database.js";
 
-const tasks = [];
+const database = new Database();
 
 const server = http.createServer(async (req, res) => {
   await json(req, res);
@@ -19,12 +20,14 @@ const server = http.createServer(async (req, res) => {
       updated_at: null,
     };
 
-    tasks.push(task);
+    database.insert("tasks", task);
 
     return res.writeHead(201).end();
   }
 
   if (req.method === "GET" && req.url === "/task") {
+    const tasks = database.select("tasks");
+
     return res.end(JSON.stringify(tasks));
   }
 
