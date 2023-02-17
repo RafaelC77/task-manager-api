@@ -16,9 +16,11 @@ const server = http.createServer((req, res) => {
 
     tasks.push(task);
 
-    console.log(tasks);
-
     return res.writeHead(201).end();
+  }
+
+  if (req.method === "GET" && req.url === "/task") {
+    res.end(JSON.stringify(tasks));
   }
 
   return res.writeHead(404).end();
