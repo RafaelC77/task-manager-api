@@ -37,6 +37,24 @@ export class Database {
     return data;
   }
 
+  update(table, id, data) {
+    const taskIndex = this.#database[table].findIndex((task) => task.id === id);
+    const { title, description } = data;
+
+    if (taskIndex > -1) {
+      const previousTask = this.#database[table][taskIndex];
+      const updatedTask = {
+        ...previousTask,
+        title,
+        description,
+        updated_at: new Date(),
+      };
+
+      this.#database[table][taskIndex] = updatedTask;
+      this.#persist();
+    }
+  }
+
   delete(table, id) {
     const rowIndex = this.#database[table].findIndex((row) => row.id === id);
 
