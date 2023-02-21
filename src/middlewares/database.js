@@ -71,4 +71,13 @@ export class Database {
       this.#persist();
     }
   }
+
+  complete(table, id) {
+    const rowIndex = this.#database[table].findIndex((row) => row.id === id);
+
+    if (rowIndex > -1) {
+      this.#database[table][rowIndex].completed_at = new Date();
+      this.#persist();
+    }
+  }
 }
