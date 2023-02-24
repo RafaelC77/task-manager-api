@@ -29,6 +29,10 @@ export const routes = [
     handler: (req, res) => {
       const { title, description } = req.body;
 
+      if (!title || !description) {
+        return res.writeHead(400, "Invalid request body content").end();
+      }
+
       const task = {
         id: randomUUID(),
         title,
@@ -49,6 +53,10 @@ export const routes = [
     handler: (req, res) => {
       const { id } = req.params;
       const { title, description } = req.body;
+
+      if (!title || !description) {
+        return res.writeHead(400, "Invalid request body content").end();
+      }
 
       database.update("tasks", id, { title, description });
 
