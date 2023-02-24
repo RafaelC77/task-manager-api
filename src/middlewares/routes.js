@@ -54,10 +54,10 @@ export const routes = [
       const { id } = req.params;
       const { title, description } = req.body;
 
-      const IdExists = database.checkID("tasks", id);
+      const [task] = database.select("tasks", { id });
 
-      if (!IdExists) {
-        return res.writeHead(404, "Id not found").end();
+      if (!task) {
+        return res.writeHead(404, "ID not found").end();
       }
 
       if (!title || !description) {
@@ -75,10 +75,10 @@ export const routes = [
     handler: (req, res) => {
       const { id } = req.params;
 
-      const IdExists = database.checkID("tasks", id);
+      const [task] = database.select("tasks", { id });
 
-      if (!IdExists) {
-        return res.writeHead(404, "Id not found").end();
+      if (!task) {
+        return res.writeHead(404, "ID not found").end();
       }
 
       database.delete("tasks", id);
@@ -92,10 +92,10 @@ export const routes = [
     handler: (req, res) => {
       const { id } = req.params;
 
-      const IdExists = database.checkID("tasks", id);
+      const [task] = database.select("tasks", { id });
 
-      if (!IdExists) {
-        return res.writeHead(404, "Id not found").end();
+      if (!task) {
+        return res.writeHead(404, "ID not found").end();
       }
 
       database.complete("tasks", id);

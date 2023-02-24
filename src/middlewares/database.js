@@ -80,10 +80,4 @@ export class Database {
       this.#persist();
     }
   }
-
-  checkID(table, id) {
-    const rowIndex = this.#database[table].findIndex((row) => row.id === id);
-
-    return rowIndex > -1;
-  }
 }
