@@ -54,6 +54,12 @@ export const routes = [
       const { id } = req.params;
       const { title, description } = req.body;
 
+      const IdExists = database.checkID("tasks", id);
+
+      if (!IdExists) {
+        return res.writeHead(404, "Id not found").end();
+      }
+
       if (!title || !description) {
         return res.writeHead(400, "Invalid request body content").end();
       }
@@ -68,6 +74,13 @@ export const routes = [
     path: generateRoutePath("/tasks/:id"),
     handler: (req, res) => {
       const { id } = req.params;
+
+      const IdExists = database.checkID("tasks", id);
+
+      if (!IdExists) {
+        return res.writeHead(404, "Id not found").end();
+      }
+
       database.delete("tasks", id);
 
       return res.writeHead(204).end();
@@ -78,6 +91,12 @@ export const routes = [
     path: generateRoutePath("/tasks/:id/complete"),
     handler: (req, res) => {
       const { id } = req.params;
+
+      const IdExists = database.checkID("tasks", id);
+
+      if (!IdExists) {
+        return res.writeHead(404, "Id not found").end();
+      }
 
       database.complete("tasks", id);
 
